@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoList.Views.AddEditTaskPage"
+             NavigationPage.HasNavigationBar="False">
+    <Grid>
+        <BoxView HeightRequest="5" 
+                 Color="{StaticResource Black}"
+                 VerticalOptions="Start"/>
+        
+        <VerticalStackLayout Padding="15" Spacing="10">
+            
+            <Button HorizontalOptions="End" Text="x"
+                    Clicked="CloseModal" Padding="0"
+                    MinimumHeightRequest="30" MinimumWidthRequest="30"/>
+            <Border StrokeThickness="1" StrokeShape="RoundRectangle 10">
+                <Entry Placeholder="Tarefa"
+                PlaceholderColor="#A8A8A8"/>
+            </Border>
+            
+            <Border StrokeThickness="1" StrokeShape="RoundRectangle 10">
+                <Editor Placeholder="Descrição" AutoSize="TextChanges"/>
+            </Border>
+            
+            <Border StrokeThickness="1" StrokeShape="RoundRectangle 10">
+                <DatePicker x:Name="DatePicker_TaskDate"/>
+            </Border>
+            
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Etapas (Subtarefas)" VerticalOptions="Center" />
+                <Button Text="+" HorizontalOptions="EndAndExpand" 
+                        Clicked="AddStep" Padding="0"
+                        MinimumHeightRequest="30" MinimumWidthRequest="30"/>
+            </StackLayout>
+            
+            <Grid ColumnDefinitions="30, *, 30">
+                <CheckBox Grid.Column="0" />
+                <Label Text="Etapa" 
+                       Grid.Column="1"/>
+                <Label Text="Trash" 
+                       Grid.Column="2"/>
+            </Grid>
+            
+        </VerticalStackLayout>
+
+        <Button Text="Salvar"
+                VerticalOptions="End"
+                Margin="15"
+                Clicked="SaveData"/>
+    </Grid>
+</ContentPage>

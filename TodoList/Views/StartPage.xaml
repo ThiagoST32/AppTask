@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TodoList.Views.StartPage"
+             NavigationPage.HasNavigationBar="False">
+    
+        <Grid RowDefinitions="80, *">
+
+        <Border Margin="20,20,20,0" HeightRequest="50"
+                StrokeShape="RoundRectangle 25"
+                StrokeThickness="1"
+                BackgroundColor="#F7F7F7F7">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FocusEntrySearch"/>
+            </Border.GestureRecognizers>
+            <HorizontalStackLayout >
+                <Image Source="find.png" Margin="8, 0"
+                       HeightRequest="33" WidthRequest="33"/>
+                <Entry Placeholder="Pesquisar..." HeightRequest="50" x:Name="EntrySearch"
+                       HorizontalOptions="FillAndExpand" BackgroundColor="Black" PlaceholderColor="#A8A8A8"
+                        Margin="20,20,20,20"/>
+            </HorizontalStackLayout>
+        </Border>
+            
+            <Label Text="Qual tarefa será adicionada??" Grid.Row="1"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+            
+            <Button Text="Adicionar Tarefas" 
+                    Grid.Row="1" HorizontalOptions="Center"
+                    VerticalOptions="End" Margin="15"
+                    Clicked="AddTask"/>
+            
+        </Grid>
+    
+</ContentPage>

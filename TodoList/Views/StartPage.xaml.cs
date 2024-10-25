@@ -5,7 +5,7 @@ namespace TodoList.Views;
 
 public partial class StartPage : ContentPage
 {
-    private ITaskModelRepository _repository;
+    private readonly TaskModelRepository _repository;
 	public StartPage()
 	{
 		InitializeComponent();
@@ -19,27 +19,14 @@ public partial class StartPage : ContentPage
     private void LoadData()
     {
         var tasks = _repository.GetAll();
-        CollectionViweTasks.ItemsSource = tasks;
         EmptyText.IsVisible = tasks.Count <= 0;
-        //tasks.Remove();
-        //(List<TaskModel>)(CollectionViweTasks.ItemsSource).
     }
 
 
     private void AddTask(object sender, EventArgs e)
     {
-        _repository.Added(new TaskModel
-        {
-            Name = "Carro",
-            Description = "Suspensões",
-            IsCompleted = true,
-            Create = DateTime.Now,
-            FinalDate = DateTime.Now.AddDays(2)
-        });
-
-
         LoadData();
-		//Navigation.PushModalAsync(new AddEditTaskPage());
+		Navigation.PushModalAsync(new AddEditTaskPage());
     }
 
     private void FocusEntrySearch(object sender, TappedEventArgs e)
@@ -57,11 +44,20 @@ public partial class StartPage : ContentPage
     private async void OnImageClickedRemoveTask(object sender, TappedEventArgs e)
     {
         var task = (TaskModel)e.Parameter;
-        var confirm = await DisplayAlert("Exclusão", $"Deseja Excluir a tarefa: {task} ?", "Sim", "Não");
+        var confirm = await DisplayAlert("Exclusão", $"Deseja Excluir a tarefa: {task.Name} ?", "Sim", "Não");
         if (confirm)
         {
             _repository.Delete(task);
             LoadData();
         }
+    }
+
+    private void OnTapChangeToTaskComplete(object sender, TappedEventArgs e)
+    {
+        var task = (TaskModel)e.Parameter;
+        var checkbox = ((CheckBox)sender);
+        task.IsCompleted = checkbox.IsChecked;
+        _repository.Updated(task);
+        Console.WriteLine(task.IsCompleted);
     }
 }

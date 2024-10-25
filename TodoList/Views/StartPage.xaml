@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:TodoList.Libraries"
              x:Class="TodoList.Views.StartPage"
              NavigationPage.HasNavigationBar="False">
-    
+    <ContentPage.Resources>
+        <converter:BoolToTextDecorationStreakThroughTrue x:Key="BoolToTextDecorationStreakThroughTrue"/>
+    </ContentPage.Resources>
         <Grid RowDefinitions="80, *">
 
         <Border Margin="20,20,20,0" HeightRequest="50"
@@ -26,10 +29,19 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="70, *, 70" Padding="10">
-                        <CheckBox Grid.Column="0" HorizontalOptions="Center"/>
+                        <CheckBox
+                            Grid.Column="0"
+                            HorizontalOptions="Center"
+                            IsChecked="{Binding IsCompleted}">
+                            <CheckBox.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}" Tapped="OnTapChangeToTaskComplete"/>
+                            </CheckBox.GestureRecognizers>
+                        </CheckBox>
+                        
+
                         <StackLayout Grid.Column="1">
-                            <Label Text="{Binding Name}"/>
-                            <Label Text="{Binding FinalDate}"/>
+                            <Label Text="{Binding Name}" TextDecorations="{Binding IsCompleted, Converter={StaticResource BoolToTextDecorationStreakThroughTrue}}" TextColor="{StaticResource Gray500}"/>
+                            <Label Text="{Binding FinalDate}" TextDecorations="{Binding IsCompleted, Converter={StaticResource BoolToTextDecorationStreakThroughTrue}}" TextColor="{StaticResource Gray500}"/>
                         </StackLayout>
                         <Image Grid.Column="2" Source="trash.svg" HeightRequest="20">
                             <Image.GestureRecognizers>

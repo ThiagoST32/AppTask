@@ -1,15 +1,19 @@
 using AppTask.Models;
 using System.Text;
+using TodoList.Repositories;
 
 namespace TodoList.Views;
 
 public partial class AddEditTaskPage : ContentPage
 {
     private TaskModel _task;
+
+    private ITaskModelRepository _taskModelRepository;
 	public AddEditTaskPage()
 	{
 		InitializeComponent();
         _task = new TaskModel();
+        _taskModelRepository = new TaskModelRepository();
         BindableLayout.SetItemsSource(BindableLayout_Steps, _task.SubTasks);
 	}
 
@@ -28,11 +32,29 @@ public partial class AddEditTaskPage : ContentPage
         ValidateData();
 
         //Salvar os Dados
+        if (ValidateData()) SaveInDataBase();
 
         //Fechar a tela
+        Navigation.PopModalAsync();
 
         //Atualizar Listagem de dados
-        Navigation.PopModalAsync();
+        UpdateListOnStartPage();
+    }
+
+    private void UpdateListOnStartPage()
+    {
+        // NavigationPage > StartPage > LoadData();
+
+        var navPage = (NavigationPage)App.Current.MainPage;
+        var startPage = (StartPage)navPage.CurrentPage;
+        startPage.LoadData();
+
+    }
+
+    private void SaveInDataBase()
+    {
+
+        _taskModelRepository.Added(_task);
     }
 
     private bool ValidateData()

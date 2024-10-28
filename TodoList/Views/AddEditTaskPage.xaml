@@ -22,10 +22,13 @@
                     <Entry Placeholder="Tarefa" x:Name="Entry_TaskName"
                     PlaceholderColor="#A8A8A8"/>
                 </Border>
+                <Label Text="O campo é obrigatorio!" TextColor="Red" Margin="0, -10, 0, 10" x:Name="LblTaskNameInvalid" IsVisible="False"/>
 
                 <Border StrokeThickness="1" StrokeShape="RoundRectangle 10">
                     <Editor Placeholder="Descrição" AutoSize="TextChanges" x:Name="Editor_TaskDescription"/>
                 </Border>
+                <Label Text="O campo é obrigatorio!" TextColor="Red" Margin="0, -10, 0, 10" x:Name="LblTaskDescriptionInvalid" IsVisible="False"/>
+
 
                 <Border StrokeThickness="1" StrokeShape="RoundRectangle 10">
                     <DatePicker x:Name="Date_PickerTaskDate"/>

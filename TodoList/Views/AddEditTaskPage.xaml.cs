@@ -1,4 +1,5 @@
 using AppTask.Models;
+using System.Text;
 
 namespace TodoList.Views;
 
@@ -22,7 +23,9 @@ public partial class AddEditTaskPage : ContentPage
     {
         //Obter os Dados
         GetDataFromForm();
+
         //Validar os Dados
+        ValidateData();
 
         //Salvar os Dados
 
@@ -30,6 +33,19 @@ public partial class AddEditTaskPage : ContentPage
 
         //Atualizar Listagem de dados
         Navigation.PopModalAsync();
+    }
+
+    private bool ValidateData()
+    {
+        bool validResult = true;
+        LblTaskDescriptionInvalid.IsVisible = false;
+        LblTaskNameInvalid.IsVisible = false;
+
+        if (string.IsNullOrWhiteSpace(_task.Name)) LblTaskNameInvalid.IsVisible = true; validResult = false; 
+        if (string.IsNullOrWhiteSpace(_task.Description)) LblTaskDescriptionInvalid.IsVisible = true; validResult = false; 
+
+
+        return validResult;
     }
 
     private void GetDataFromForm()
